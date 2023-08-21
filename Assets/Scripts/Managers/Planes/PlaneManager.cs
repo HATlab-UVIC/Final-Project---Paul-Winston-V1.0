@@ -26,7 +26,7 @@ public class PlaneManager : MonoBehaviour
     {
         // subscribe to permission events
         permissionCallbacks.OnPermissionGranted += OnPermissionGranted;
-        permissionCallbacks.OnPermissionGranted += OnPermissionDenied;
+        permissionCallbacks.OnPermissionDenied += OnPermissionDenied;
         permissionCallbacks.OnPermissionDeniedAndDontAskAgain += OnPermissionDenied;
     }
 
@@ -34,7 +34,7 @@ public class PlaneManager : MonoBehaviour
     {
         // unsubscribe to permission events
         permissionCallbacks.OnPermissionGranted -= OnPermissionGranted;
-        permissionCallbacks.OnPermissionGranted -= OnPermissionDenied;
+        permissionCallbacks.OnPermissionDenied -= OnPermissionDenied;
         permissionCallbacks.OnPermissionDeniedAndDontAskAgain -= OnPermissionDenied;
     }
 
@@ -50,7 +50,8 @@ public class PlaneManager : MonoBehaviour
         }
         else
         {
-            planeManager.enabled = true;
+            // disable planeManager until we have successfully requested required permissions
+            planeManager.enabled = false;
         }
 
         // request spatial mapping permission for plane detection
@@ -58,6 +59,11 @@ public class PlaneManager : MonoBehaviour
     }
 
     private void Update()
+    {
+        UpdateQuery();
+    }
+
+    private void UpdateQuery()
     {
         if (planeManager.enabled)
         {
@@ -140,6 +146,7 @@ public class PlaneManager : MonoBehaviour
             Debug.Log("Plane manager is active");
             text.text += "Plane manager is active";
         }
+        UpdateQuery();
     }
 
     private void OnPermissionDenied(string permission)

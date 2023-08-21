@@ -22,6 +22,8 @@ MonoBehaviour:
     Value: Open Window
   - Id: 104
     Value: Close Window
+  - Id: 105
+    Value: Quit Application
   AutoAllowAllSystemIntents: 0
   SystemCommands: 0
   SlotsForVoiceCommands: []

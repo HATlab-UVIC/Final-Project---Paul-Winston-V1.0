@@ -9,6 +9,9 @@ public class VoiceIntents : MonoBehaviour
 {
     public PlaneManager PlaneManager;
 
+    // implement singleton
+    public GameManager GameManager;
+
     private readonly MLPermissions.Callbacks permissionCallbacks = new MLPermissions.Callbacks();
 
     [SerializeField, Tooltip("The text used to display status information for the example.")]
@@ -111,6 +114,12 @@ public class VoiceIntents : MonoBehaviour
                 Debug.Log("Voice Command: Close Windows");
                 statusText.text = "Voice Command: Close Window";
                 PlaneManager.CloseWindow();
+            }
+            if (voiceEvent.EventID == 105)
+            {
+                Debug.Log("Voice Command: Quit Application");
+                statusText.text = "Voice Command: Quit Application";
+                GameManager.QuitApplication();
             }
 
         }
