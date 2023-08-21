@@ -8,6 +8,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main menu.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/Spring.unity
+    guid: 1712f5ed78e35f144b2fe99d2144a63e
   m_configObjects:
     com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: e2b98a02be0411843b17e1b5ec9fd6a6,
       type: 2}

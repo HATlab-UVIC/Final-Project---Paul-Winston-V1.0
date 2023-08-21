@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.Experimental.XR.Interaction;
 using System.Threading;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class UserInterface : MonoBehaviour
 {
@@ -107,6 +108,29 @@ public class UserInterface : MonoBehaviour
         {
             _currentMenu = CurrentMenu.Empty;
             UIUpdated.Invoke();
+            // Load Scene Spring
+            if (name == PatientMenuUI[1].name)
+            {
+                SceneManager.LoadScene("Spring");
+            }
+            else if (name == PatientMenuUI[2].name)
+            {
+                // SceneManager.LoadScene("Summer");
+                _currentMenu = CurrentMenu.MainMenu;
+                UIUpdated.Invoke();
+            }
+            else if (name == PatientMenuUI[3].name)
+            {
+                // SceneManager.LoadScene("Fall");
+                _currentMenu = CurrentMenu.MainMenu;
+                UIUpdated.Invoke();
+            }
+            else if (name == PatientMenuUI[4].name)
+            {
+                // SceneManager.LoadScene("Winter");
+                _currentMenu = CurrentMenu.MainMenu;
+                UIUpdated.Invoke();
+            }
         }
     }
 
