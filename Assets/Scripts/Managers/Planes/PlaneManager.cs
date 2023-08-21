@@ -56,6 +56,8 @@ public class PlaneManager : MonoBehaviour
 
         // request spatial mapping permission for plane detection
         MLPermissions.RequestPermission(MLPermission.SpatialMapping, permissionCallbacks);
+
+        // StartCoroutine(debugging());
     }
 
     private void Update()
@@ -71,13 +73,27 @@ public class PlaneManager : MonoBehaviour
             {
                 // Detects Ceiling and Floor. For more information of flags: https://developer-docs.magicleap.cloud/docs/api-ref/api/Modules/group___planes#enums-mlplanesqueryflags
                 Flags = planeManager.requestedDetectionMode.ToMLQueryFlags() | PlanesSubsystem.Extensions.MLPlanesQueryFlags.Polygons | PlanesSubsystem.Extensions.MLPlanesQueryFlags.Semantic_Ceiling | PlanesSubsystem.Extensions.MLPlanesQueryFlags.Semantic_Floor,
+                /// The center of the bounding box which defines where planes extraction
+                // should occur.
                 BoundsCenter = Camera.main.transform.position,
+                /// The rotation of the bounding box where planes extraction will occur.
                 BoundsRotation = Camera.main.transform.rotation,
+                /// The size of the bounding box where planes extraction will occur.
                 BoundsExtents = Vector3.one * 20f,
+                /// The maximum number of results that should be returned.
                 MaxResults = maxResults,
+                // The minimum area (in squared meters) of planes to be returned. This
+                // value cannot be lower than 0.04 (lower values will be capped to this
+                // minimum).
                 MinPlaneArea = minPlaneArea
             };
         }
+    }
+
+    private IEnumerator debugging()
+    {
+        yield return new WaitForSeconds(5f);
+        Lock();
     }
 
     public void Lock()
@@ -104,12 +120,10 @@ public class PlaneManager : MonoBehaviour
             }
 
             temp.GetComponent<ARPlaneMeshVisualizer>().enabled = false;
-
             temp.GetComponent<MeshRenderer>().enabled = true;
             temp.GetComponent<PlanePrefab>().enabled = false;
-
+            temp.GetComponent<ARPlane>().enabled = false;
             temp.GetComponent<MeshRenderer>().material = planeMaterial;
-
             temp.transform.parent = planeSpawner.transform;
             plane.gameObject.SetActive(false);
         }
