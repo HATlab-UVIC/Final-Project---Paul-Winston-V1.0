@@ -24,6 +24,10 @@ MonoBehaviour:
     Value: Close Window
   - Id: 105
     Value: Quit Application
+  - Id: 106
+    Value: Dim Environment
+  - Id: 107
+    Value: Undim Environment
   AutoAllowAllSystemIntents: 0
   SystemCommands: 0
   SlotsForVoiceCommands: []

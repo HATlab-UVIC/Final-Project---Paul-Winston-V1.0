@@ -121,6 +121,18 @@ public class VoiceIntents : MonoBehaviour
                 statusText.text = "Voice Command: Quit Application";
                 GameManager.QuitApplication();
             }
+            if (voiceEvent.EventID == 106)
+            {
+                Debug.Log("Voice Command: Dim Environment");
+                statusText.text = "Voice Command: Dim Environment";
+                GlobalDimManager.dimVoiceCommand.Invoke(true);
+            }
+            if (voiceEvent.EventID == 107)
+            {
+                Debug.Log("Voice Command: Undim Environment");
+                statusText.text = "Voice Command: Undim Environemnt";
+                GlobalDimManager.dimVoiceCommand.Invoke(false);
+            }
 
         }
     }
