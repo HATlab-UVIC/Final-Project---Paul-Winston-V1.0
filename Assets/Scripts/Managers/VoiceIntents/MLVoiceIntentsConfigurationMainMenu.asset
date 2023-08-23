@@ -10,28 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71122c582b923f04ab4f88f548a59fce, type: 3}
-  m_Name: MLVoiceIntentsConfiguration
+  m_Name: MLVoiceIntentsConfigurationMainMenu
   m_EditorClassIdentifier: 
   AllVoiceIntents: []
   VoiceCommandsToAdd:
-  - Id: 101
-    Value: Lock Plane
-  - Id: 102
-    Value: Unlock Plane
-  - Id: 103
-    Value: Open Window
-  - Id: 104
-    Value: Close Window
+  - Id: 200
+    Value: Start Eye Tracking
+  - Id: 201
+    Value: Stop Eye Tracking
   - Id: 1
     Value: Quit Application
   - Id: 106
     Value: Dim Environment
   - Id: 107
     Value: Undim Environment
-  - Id: 200
-    Value: Start Eye Tracking
-  - Id: 201
-    Value: Stop Eye Tracking
   AutoAllowAllSystemIntents: 0
   SystemCommands: 0
   SlotsForVoiceCommands: []

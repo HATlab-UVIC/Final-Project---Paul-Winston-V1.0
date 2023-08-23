@@ -5,14 +5,12 @@ using UnityEngine.UI;
 using UnityEngine.XR.ARSubsystems;
 using UnityEngine.XR.MagicLeap;
 
-public class VoiceIntents : MonoBehaviour
+public class VoiceIntentsMainMenu : MonoBehaviour
 {
 
     // implement singleton
-    public GameManager GameManager;
-    public PlaneManager PlaneManager;
     public EyeTrackingManager EyeTrackingManager;
-
+    public GameManager GameManager;
 
     private readonly MLPermissions.Callbacks permissionCallbacks = new MLPermissions.Callbacks();
 
@@ -93,30 +91,6 @@ public class VoiceIntents : MonoBehaviour
     {
         if (wasSuccessful)
         {
-            if (voiceEvent.EventID == 101)
-            {
-                Debug.Log("Voice Command: Lock");
-                statusText.text = "Voice Command: Lock";
-                PlaneManager.Lock();
-            }
-            if (voiceEvent.EventID == 102)
-            {
-                Debug.Log("Voice Command: Unlock");
-                statusText.text = "Voice Command: Unlock";
-                PlaneManager.Unlock();
-            }
-            if (voiceEvent.EventID == 103)
-            {
-                Debug.Log("Voice Command: Open Window");
-                statusText.text = "Voice Command: Open Window";
-                PlaneManager.OpenWindow();
-            }
-            if (voiceEvent.EventID == 104)
-            {
-                Debug.Log("Voice Command: Close Windows");
-                statusText.text = "Voice Command: Close Window";
-                PlaneManager.CloseWindow();
-            }
             if (voiceEvent.EventID == 001)
             {
                 Debug.Log("Voice Command: Quit Application");
