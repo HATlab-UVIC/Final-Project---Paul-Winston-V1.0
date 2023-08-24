@@ -8,7 +8,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.MagicLeap;
 using static MagicLeapInputs;
 
-public class EyeTrackingManager : MonoBehaviour
+public class EyeTrackingManager : Singleton<EyeTrackingManager>
 {
     // private Transform attachTranform;
     private Transform rayOriginTransform;
@@ -57,15 +57,17 @@ public class EyeTrackingManager : MonoBehaviour
         mlInputs = new MagicLeapInputs();
         mlInputs.Enable();
         MLPermissions.RequestPermission(MLPermission.EyeTracking, permissionCallbacks);
+        rayOriginTransform = mainCameraTransform;
+        leftEyeTranformTrackedPoseDriver = this.transform.GetChild(0).transform;
+        rightEyeTranformTrackedPoseDriver = this.transform.GetChild(1).transform;
         if (permissionGranted)
         {
-            rayOriginTransform = mainCameraTransform;
-            leftEyeTranformTrackedPoseDriver = this.transform.GetChild(0).transform;
-            rightEyeTranformTrackedPoseDriver = this.transform.GetChild(1).transform;
+            OnStartEyeTrackingByVoiceIntent();
             statusText.text += "Eye Tracking is active";
         }
         else
         {
+            OnStopEyeTrackingByVoiceIntent();
             statusText.text += "Eye Tracking is not active";
         }
     }
@@ -103,9 +105,12 @@ public class EyeTrackingManager : MonoBehaviour
 
     private void OnPermissionGranted(string permission)
     {
-        InputSubsystem.Extensions.MLEyes.StartTracking();
-        eyesActions = new MagicLeapInputs.EyesActions(mlInputs);
-        permissionGranted = true;
+        if (permission == MLPermission.EyeTracking)
+        {
+            InputSubsystem.Extensions.MLEyes.StartTracking();
+            eyesActions = new MagicLeapInputs.EyesActions(mlInputs);
+            permissionGranted = true;
+        }
     }
 
     [ContextMenu("OnStopEyeTrackingByVoiceIntent")]

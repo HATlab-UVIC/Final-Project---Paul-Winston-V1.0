@@ -15,9 +15,9 @@ MonoBehaviour:
   AllVoiceIntents: []
   VoiceCommandsToAdd:
   - Id: 200
-    Value: Start Eye Tracking
+    Value: Start Eye Tracking | Stop Eye
   - Id: 201
-    Value: Stop Eye Tracking
+    Value: Stop Eye Tracking | Start Eye
   - Id: 101
     Value: Lock Plane
   - Id: 102

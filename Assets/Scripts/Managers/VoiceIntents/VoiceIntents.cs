@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,13 +6,13 @@ using UnityEngine.UI;
 using UnityEngine.XR.ARSubsystems;
 using UnityEngine.XR.MagicLeap;
 
-public class VoiceIntents : MonoBehaviour
+public class VoiceIntents : Singleton<VoiceIntents>
 {
 
     // implement singleton
     public GameManager GameManager;
     public PlaneManager PlaneManager;
-    public EyeTrackingManager EyeTrackingManager;
+    // public EyeTrackingManager EyeTrackingManager;
 
 
     private readonly MLPermissions.Callbacks permissionCallbacks = new MLPermissions.Callbacks();
@@ -36,6 +37,22 @@ public class VoiceIntents : MonoBehaviour
         permissionCallbacks.OnPermissionGranted -= OnPermissionGranted;
         permissionCallbacks.OnPermissionDenied -= OnPermissionDenied;
         permissionCallbacks.OnPermissionDeniedAndDontAskAgain -= OnPermissionDenied;
+        
+        bool isVoiceEnabled = MLVoice.VoiceEnabled;
+
+        // if voice setting is enabled, unsubsribe voice intent configuration
+        if (isVoiceEnabled)
+        {
+            var result = MLVoice.SetupVoiceIntents(VoiceIntentsConfiguration);
+            if (result.IsOk)
+            {
+                MLVoice.OnVoiceEvent -= MLVoiceOnOnVoiceEvent;
+            }
+            else
+            {
+                Debug.LogError("Voice could not initialize:" + result);
+            }
+        }
     }
 
     // request permission for voice input at start
@@ -47,6 +64,7 @@ public class VoiceIntents : MonoBehaviour
     // on voice permission denied, disable script
     private void OnPermissionDenied(string permission)
     {
+        statusText.text = $"Failed to initialize voice intents due to missing or denied {MLPermission.VoiceInput} permission. Please add to manifest. Disabling script.";
         Debug.LogError($"Failed to initialize voice intents due to missing or denied {MLPermission.VoiceInput} permission. Please add to manifest. Disabling script.");
         enabled = false;
     }
@@ -60,7 +78,7 @@ public class VoiceIntents : MonoBehaviour
 
 
     // check if voice commands setting is enabled, then set up voice intents
-    private void InitializeVoiceInput()
+    public void InitializeVoiceInput()
     {
         bool isVoiceEnabled = MLVoice.VoiceEnabled;
 
@@ -68,6 +86,7 @@ public class VoiceIntents : MonoBehaviour
         if (isVoiceEnabled)
         {
             Debug.Log("Voice commands setting is enabled");
+            statusText.text += "Voice commands setting is enabled";
             var result = MLVoice.SetupVoiceIntents(VoiceIntentsConfiguration);
             if (result.IsOk)
             {
@@ -93,55 +112,61 @@ public class VoiceIntents : MonoBehaviour
     {
         if (wasSuccessful)
         {
+            statusText.text = "Voice Command read successful";
             if (voiceEvent.EventID == 200)
             {
                 Debug.Log("Voice Command: Start Eye Tracking");
                 statusText.text = "Voice Command: Start Eye Tracking";
-                EyeTrackingManager.OnStartEyeTrackingByVoiceIntent();
+                EyeTrackingManager.Instance.OnStartEyeTrackingByVoiceIntent();
             }
-            if (voiceEvent.EventID == 201)
+            else if (voiceEvent.EventID == 201)
             {
                 Debug.Log("Voice Command: Stop Eyetracking");
                 statusText.text = "Voice Command: Stop Eyetracking";
-                EyeTrackingManager.OnStopEyeTrackingByVoiceIntent();
+                EyeTrackingManager.Instance.OnStopEyeTrackingByVoiceIntent();
             }
-            if (voiceEvent.EventID == 101)
+            else if (voiceEvent.EventID == 101)
             {
                 Debug.Log("Voice Command: Lock");
                 statusText.text = "Voice Command: Lock";
                 PlaneManager.Lock();
             }
-            if (voiceEvent.EventID == 102)
+            else if (voiceEvent.EventID == 102)
             {
                 Debug.Log("Voice Command: Unlock");
                 statusText.text = "Voice Command: Unlock";
                 PlaneManager.Unlock();
             }
-            if (voiceEvent.EventID == 103)
+            else if (voiceEvent.EventID == 103)
             {
                 Debug.Log("Voice Command: Open Window");
-                statusText.text = "Voice Command: Open Window";
+                statusText.text = "Voice Command: Open Window (Not implemented yet)";
                 PlaneManager.OpenWindow();
             }
-            if (voiceEvent.EventID == 104)
+            else if (voiceEvent.EventID == 104)
             {
                 Debug.Log("Voice Command: Close Windows");
-                statusText.text = "Voice Command: Close Window";
+                statusText.text = "Voice Command: Close Window (Not implemented yet)";
                 PlaneManager.CloseWindow();
             }
-            if (voiceEvent.EventID == 901)
+            else if (voiceEvent.EventID == 105)
+            {
+                Debug.Log("Voice Command: Reset Planes");
+                statusText.text = "Voice Command: Reset Planes (Not implemented yet)";
+            }
+            else if (voiceEvent.EventID == 901)
             {
                 Debug.Log("Voice Command: Quit Application");
                 statusText.text = "Voice Command: Quit Application";
                 GameManager.QuitApplication();
             }
-            if (voiceEvent.EventID == 106)
+            else if (voiceEvent.EventID == 106)
             {
                 Debug.Log("Voice Command: Dim Environment");
                 statusText.text = "Voice Command: Dim Environment";
                 GlobalDimManager.dimVoiceCommand.Invoke(true);
             }
-            if (voiceEvent.EventID == 107)
+            else if (voiceEvent.EventID == 107)
             {
                 Debug.Log("Voice Command: Undim Environment");
                 statusText.text = "Voice Command: Undim Environemnt";

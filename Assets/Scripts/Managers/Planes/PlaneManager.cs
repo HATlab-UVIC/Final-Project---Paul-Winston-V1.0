@@ -56,8 +56,6 @@ public class PlaneManager : MonoBehaviour
 
         // request spatial mapping permission for plane detection
         MLPermissions.RequestPermission(MLPermission.SpatialMapping, permissionCallbacks);
-
-        // StartCoroutine(debugging());
     }
 
     private void Update()

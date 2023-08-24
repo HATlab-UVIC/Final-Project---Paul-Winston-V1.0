@@ -34,6 +34,22 @@ public class VoiceIntentsMainMenu : MonoBehaviour
         permissionCallbacks.OnPermissionGranted -= OnPermissionGranted;
         permissionCallbacks.OnPermissionDenied -= OnPermissionDenied;
         permissionCallbacks.OnPermissionDeniedAndDontAskAgain -= OnPermissionDenied;
+
+        bool isVoiceEnabled = MLVoice.VoiceEnabled;
+
+        // if voice setting is enabled, unsubsribe voice intent configuration
+        if (isVoiceEnabled)
+        {
+            var result = MLVoice.SetupVoiceIntents(VoiceIntentsConfiguration);
+            if (result.IsOk)
+            {
+                MLVoice.OnVoiceEvent -= MLVoiceOnOnVoiceEvent;
+            }
+            else
+            {
+                Debug.LogError("Voice could not initialize:" + result);
+            }
+        }
     }
 
     // request permission for voice input at start
@@ -45,6 +61,7 @@ public class VoiceIntentsMainMenu : MonoBehaviour
     // on voice permission denied, disable script
     private void OnPermissionDenied(string permission)
     {
+        statusText.text = $"Failed to initialize voice intents due to missing or denied {MLPermission.VoiceInput} permission. Please add to manifest. Disabling script.";
         Debug.LogError($"Failed to initialize voice intents due to missing or denied {MLPermission.VoiceInput} permission. Please add to manifest. Disabling script.");
         enabled = false;
     }
@@ -66,6 +83,7 @@ public class VoiceIntentsMainMenu : MonoBehaviour
         if (isVoiceEnabled)
         {
             Debug.Log("Voice commands setting is enabled");
+            statusText.text += "Voice commands setting is enabled";
             var result = MLVoice.SetupVoiceIntents(VoiceIntentsConfiguration);
             if (result.IsOk)
             {
@@ -91,34 +109,35 @@ public class VoiceIntentsMainMenu : MonoBehaviour
     {
         if (wasSuccessful)
         {
+            statusText.text = "Voice Command read successful";
             if (voiceEvent.EventID == 001)
             {
                 Debug.Log("Voice Command: Quit Application");
                 statusText.text = "Voice Command: Quit Application";
                 GameManager.QuitApplication();
             }
-            if (voiceEvent.EventID == 106)
+            else if (voiceEvent.EventID == 106)
             {
                 Debug.Log("Voice Command: Dim Environment");
                 statusText.text = "Voice Command: Dim Environment";
                 GlobalDimManager.dimVoiceCommand.Invoke(true);
             }
-            if (voiceEvent.EventID == 107)
+            else if (voiceEvent.EventID == 107)
             {
                 Debug.Log("Voice Command: Undim Environment");
                 statusText.text = "Voice Command: Undim Environemnt";
                 GlobalDimManager.dimVoiceCommand.Invoke(false);
             }
-            if (voiceEvent.EventID == 200)
+            else if (voiceEvent.EventID == 200)
             {
                 Debug.Log("Voice Command: Start Eye Tracking");
                 statusText.text = "Voice Command: Start Eye Tracking";
                 EyeTrackingManager.OnStartEyeTrackingByVoiceIntent();
             }
-            if (voiceEvent.EventID == 201)
+            else if (voiceEvent.EventID == 201)
             {
-                Debug.Log("Voice Command: Stop Eyetracking");
-                statusText.text = "Voice Command: Stop Eyetracking";
+                Debug.Log("Voice Command: Stop Eye Tracking");
+                statusText.text = "Voice Command: Stop Eye Tracking";
                 EyeTrackingManager.OnStopEyeTrackingByVoiceIntent();
             }
 
