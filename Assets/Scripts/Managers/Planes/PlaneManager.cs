@@ -90,11 +90,6 @@ public class PlaneManager : MonoBehaviour
         }
     }
 
-    private IEnumerator debugging()
-    {
-        yield return new WaitForSeconds(5f);
-        Lock();
-    }
 
     public void Lock()
     {

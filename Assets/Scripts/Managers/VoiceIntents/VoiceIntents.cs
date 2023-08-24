@@ -93,6 +93,18 @@ public class VoiceIntents : MonoBehaviour
     {
         if (wasSuccessful)
         {
+            if (voiceEvent.EventID == 200)
+            {
+                Debug.Log("Voice Command: Start Eye Tracking");
+                statusText.text = "Voice Command: Start Eye Tracking";
+                EyeTrackingManager.OnStartEyeTrackingByVoiceIntent();
+            }
+            if (voiceEvent.EventID == 201)
+            {
+                Debug.Log("Voice Command: Stop Eyetracking");
+                statusText.text = "Voice Command: Stop Eyetracking";
+                EyeTrackingManager.OnStopEyeTrackingByVoiceIntent();
+            }
             if (voiceEvent.EventID == 101)
             {
                 Debug.Log("Voice Command: Lock");
@@ -117,7 +129,7 @@ public class VoiceIntents : MonoBehaviour
                 statusText.text = "Voice Command: Close Window";
                 PlaneManager.CloseWindow();
             }
-            if (voiceEvent.EventID == 001)
+            if (voiceEvent.EventID == 901)
             {
                 Debug.Log("Voice Command: Quit Application");
                 statusText.text = "Voice Command: Quit Application";
@@ -135,19 +147,6 @@ public class VoiceIntents : MonoBehaviour
                 statusText.text = "Voice Command: Undim Environemnt";
                 GlobalDimManager.dimVoiceCommand.Invoke(false);
             }
-            if (voiceEvent.EventID == 200)
-            {
-                Debug.Log("Voice Command: Start Eye Tracking");
-                statusText.text = "Voice Command: Start Eye Tracking";
-                EyeTrackingManager.OnStartEyeTrackingByVoiceIntent();
-            }
-            if (voiceEvent.EventID == 201)
-            {
-                Debug.Log("Voice Command: Stop Eyetracking");
-                statusText.text = "Voice Command: Stop Eyetracking";
-                EyeTrackingManager.OnStopEyeTrackingByVoiceIntent();
-            }
-
         }
     }
 }

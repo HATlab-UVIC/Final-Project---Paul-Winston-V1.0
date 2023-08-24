@@ -14,6 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AllVoiceIntents: []
   VoiceCommandsToAdd:
+  - Id: 200
+    Value: Start Eye Tracking
+  - Id: 201
+    Value: Stop Eye Tracking
   - Id: 101
     Value: Lock Plane
   - Id: 102
@@ -22,16 +26,12 @@ MonoBehaviour:
     Value: Open Window
   - Id: 104
     Value: Close Window
-  - Id: 1
-    Value: Quit Application
+  - Id: 901
+    Value: Quit Application | Exit Application
   - Id: 106
     Value: Dim Environment
   - Id: 107
     Value: Undim Environment
-  - Id: 200
-    Value: Start Eye Tracking
-  - Id: 201
-    Value: Stop Eye Tracking
   AutoAllowAllSystemIntents: 0
   SystemCommands: 0
   SlotsForVoiceCommands: []

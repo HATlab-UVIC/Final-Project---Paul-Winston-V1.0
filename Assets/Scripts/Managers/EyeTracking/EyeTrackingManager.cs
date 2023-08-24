@@ -108,15 +108,16 @@ public class EyeTrackingManager : MonoBehaviour
         permissionGranted = true;
     }
 
+    [ContextMenu("OnStopEyeTrackingByVoiceIntent")]
     public void OnStopEyeTrackingByVoiceIntent()
     {
-        InputSubsystem.Extensions.MLEyes.StopTracking();
         try
         {
             foreach (Transform child in this.transform) {
                 child.gameObject.SetActive(false);
             }
             EyesController.SetActive(false);
+            InputSubsystem.Extensions.MLEyes.StopTracking();
         }
         catch (Exception e)
         {
@@ -124,17 +125,18 @@ public class EyeTrackingManager : MonoBehaviour
         }
         statusText.text += "Eye tracking disabled by voice intent";
     }
-    
+
+    [ContextMenu("OnStartEyeTrackingByVoiceIntent")]
     public void OnStartEyeTrackingByVoiceIntent()
     {
-        InputSubsystem.Extensions.MLEyes.StartTracking();
         try
         {
             foreach (Transform child in this.transform)
             {
                 child.gameObject.SetActive(true);
             }
-            EyesController.SetActive(true); ;
+            EyesController.SetActive(true);
+            InputSubsystem.Extensions.MLEyes.StartTracking();
         }
         catch (Exception e)
         {
