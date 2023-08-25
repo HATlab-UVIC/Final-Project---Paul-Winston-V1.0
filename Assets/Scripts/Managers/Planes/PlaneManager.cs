@@ -10,8 +10,10 @@ public class PlaneManager : MonoBehaviour
 {
     public GameObject planeSpawner;
     public Material planeMaterial;
-    public Text text;
+    public Text statusText;
 
+    private bool windowIsOpen = true;
+    private bool planeIsLocked = false;
     private ARPlaneManager planeManager;
 
     [SerializeField, Tooltip("Maximum number of planes to return each query")]
@@ -45,7 +47,7 @@ public class PlaneManager : MonoBehaviour
         if (planeManager == null)
         {
             Debug.LogError("Failed to find ARPlaneManager in scene. Disabling Script");
-            text.text += "Failed to find ARPlaneManager in scene. Disabling Script";
+            statusText.text += "Failed to find ARPlaneManager in scene. Disabling Script";
             enabled = false;
         }
         else
@@ -91,58 +93,113 @@ public class PlaneManager : MonoBehaviour
 
     public void Lock()
     {
-        foreach (var plane in planeManager.trackables)
+        planeIsLocked = true;
+        if (windowIsOpen)
         {
-            var temp = Instantiate(plane);
-            var planeClassification = plane.GetComponent<ARPlane>();
-
-            Debug.Log(planeClassification.classification);
-
-            Color color = Color.gray;
-            switch (planeClassification.classification)
+            foreach (var plane in planeManager.trackables)
             {
-                case PlaneClassification.Floor:
-                    color = Color.yellow;
-                    break;
-                case PlaneClassification.Ceiling:
-                    color = Color.white;
-                    break;
-                case PlaneClassification.Wall:
-                    color = Color.red;
-                    break;
-            }
+                bool isFloor = false;
+                var temp = Instantiate(plane);
+                var planeClassification = plane.GetComponent<ARPlane>();
 
-            temp.GetComponent<ARPlaneMeshVisualizer>().enabled = false;
-            temp.GetComponent<MeshRenderer>().enabled = true;
-            temp.GetComponent<PlanePrefab>().enabled = false;
-            temp.GetComponent<ARPlane>().enabled = false;
-            temp.GetComponent<MeshRenderer>().material = planeMaterial;
-            temp.transform.parent = planeSpawner.transform;
-            plane.gameObject.SetActive(false);
+                Debug.Log(planeClassification.classification);
+
+                Color color = Color.gray;
+                switch (planeClassification.classification)
+                {
+                    case PlaneClassification.Floor:
+                        color = Color.yellow;
+                        isFloor = true;
+                        break;
+                    case PlaneClassification.Ceiling:
+                        color = Color.white;
+                        break;
+                    case PlaneClassification.Wall:
+                        color = Color.red;
+                        break;
+                }
+                temp.GetComponent<ARPlaneMeshVisualizer>().enabled = false;
+                temp.GetComponent<MeshRenderer>().enabled = true;
+                temp.GetComponent<PlanePrefab>().enabled = false;
+                temp.GetComponent<ARPlane>().enabled = false;
+                if (isFloor)
+                {
+                    Material material = new Material("Universal Rendering Pipeline/Lit");
+                    material.color = color;
+                    temp.GetComponent<MeshRenderer>().material = material;
+                }
+                else
+                {
+                    temp.GetComponent<MeshRenderer>().material = planeMaterial;
+                }
+                temp.transform.parent = planeSpawner.transform;
+                plane.gameObject.SetActive(false);
+            }
+            planeManager.enabled = false;
         }
-        planeManager.enabled = false;
+        else
+        {
+            statusText.text = "Voice Intent: Lock. \nWindow is not opened yet. Open window first then lock the planes.";
+        }
     }
 
     public void Unlock()
     {
-        planeManager.enabled = true;
-        foreach (var plane in planeManager.trackables)
+        planeIsLocked = false;
+        if (windowIsOpen)
         {
-            plane.gameObject.SetActive(true);
+            planeManager.enabled = true;
+            foreach (var plane in planeManager.trackables)
+            {
+                plane.gameObject.SetActive(true);
+            }
+            foreach (Transform child in planeSpawner.transform)
+            {
+                Destroy(child.gameObject);
+            }
         }
-        foreach (Transform child in planeSpawner.transform)
+        else
         {
-            Destroy(child.gameObject);
+            statusText.text = "Voice Intent: Unlock. \nWindow is not opened yet. Open window first then unlock the planes.";
         }
     }
 
     public void OpenWindow()
     {
+        windowIsOpen = true;
+        // planes are locked. Disable locked planes
+        if (planeIsLocked)
+        {
+            planeSpawner.SetActive(true);
+        }
+        // planes are not locked. Disable ARPlane Manager
+        else
+        {
+            planeManager.enabled = true;
+            foreach (var plane in planeManager.trackables)
+            {
+                plane.gameObject.SetActive(true);
+            }
+        }
 
     }
     public void CloseWindow()
     {
-
+        windowIsOpen = false;
+        // planes are locked. Disable locked planes
+        if (planeIsLocked)
+        {
+            planeSpawner.SetActive(false);
+        }
+        // planes are not locked. Disable ARPlane Manager
+        else
+        {
+            planeManager.enabled = false;
+            foreach (var plane in planeManager.trackables)
+            {
+                plane.gameObject.SetActive(false);
+            }
+        }
     }
 
     private void OnPermissionGranted(string permission)
@@ -151,7 +208,7 @@ public class PlaneManager : MonoBehaviour
         {
             planeManager.enabled = true;
             Debug.Log("Plane manager is active");
-            text.text += "Plane manager is active";
+            statusText.text += "Plane manager is active";
         }
         UpdateQuery();
     }
@@ -159,7 +216,7 @@ public class PlaneManager : MonoBehaviour
     private void OnPermissionDenied(string permission)
     {
         Debug.LogError($"Failed to create Planes Subsystem due to missing or denied {MLPermission.SpatialMapping} permission. Please add to manifest. Disabling script.");
-        text.text += $"Failed to create Planes Subsystem due to missing or denied {MLPermission.SpatialMapping} permission. Please add to manifest. Disabling script.";
+        statusText.text += $"Failed to create Planes Subsystem due to missing or denied {MLPermission.SpatialMapping} permission. Please add to manifest. Disabling script.";
         enabled = false;
     }
 }
