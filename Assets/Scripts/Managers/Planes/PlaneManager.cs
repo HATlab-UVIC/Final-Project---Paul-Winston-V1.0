@@ -10,6 +10,7 @@ public class PlaneManager : MonoBehaviour
 {
     public GameObject planeSpawner;
     public Material planeMaterial;
+    public Material defaultPlaneMaterial;
     public Text statusText;
 
     private bool windowIsOpen = true;
@@ -21,6 +22,9 @@ public class PlaneManager : MonoBehaviour
 
     [SerializeField, Tooltip("Minimum plane area to treat as a valid plane")]
     private float minPlaneArea = 0.25f;
+
+    [SerializeField]
+    ARSession arSession;
 
     private readonly MLPermissions.Callbacks permissionCallbacks = new MLPermissions.Callbacks();
 
@@ -93,7 +97,6 @@ public class PlaneManager : MonoBehaviour
 
     public void Lock()
     {
-        planeIsLocked = true;
         if (windowIsOpen)
         {
             foreach (var plane in planeManager.trackables)
@@ -113,20 +116,20 @@ public class PlaneManager : MonoBehaviour
                         break;
                     case PlaneClassification.Ceiling:
                         color = Color.white;
+                        isFloor = false;
                         break;
                     case PlaneClassification.Wall:
                         color = Color.red;
+                        isFloor = false;
                         break;
                 }
                 temp.GetComponent<ARPlaneMeshVisualizer>().enabled = false;
                 temp.GetComponent<MeshRenderer>().enabled = true;
                 temp.GetComponent<PlanePrefab>().enabled = false;
-                temp.GetComponent<ARPlane>().enabled = false;
+                // temp.GetComponent<ARPlane>().enabled = false;
                 if (isFloor)
                 {
-                    Material material = new Material("Universal Rendering Pipeline/Lit");
-                    material.color = color;
-                    temp.GetComponent<MeshRenderer>().material = material;
+                    temp.GetComponent<MeshRenderer>().material = defaultPlaneMaterial;
                 }
                 else
                 {
@@ -135,19 +138,20 @@ public class PlaneManager : MonoBehaviour
                 temp.transform.parent = planeSpawner.transform;
                 plane.gameObject.SetActive(false);
             }
+            planeIsLocked = true;
             planeManager.enabled = false;
         }
         else
         {
-            statusText.text = "Voice Intent: Lock. \nWindow is not opened yet. Open window first then lock the planes.";
+            statusText.text += "\nWindow is not opened yet. Open window first then lock the planes.";
         }
     }
 
     public void Unlock()
     {
-        planeIsLocked = false;
         if (windowIsOpen)
         {
+            planeIsLocked = false;
             planeManager.enabled = true;
             foreach (var plane in planeManager.trackables)
             {
@@ -160,7 +164,7 @@ public class PlaneManager : MonoBehaviour
         }
         else
         {
-            statusText.text = "Voice Intent: Unlock. \nWindow is not opened yet. Open window first then unlock the planes.";
+            statusText.text += "\nWindow is not opened yet. Open window first then unlock the planes.";
         }
     }
 
@@ -175,7 +179,7 @@ public class PlaneManager : MonoBehaviour
         // planes are not locked. Disable ARPlane Manager
         else
         {
-            planeManager.enabled = true;
+            // planeManager.enabled = true;
             foreach (var plane in planeManager.trackables)
             {
                 plane.gameObject.SetActive(true);
@@ -194,11 +198,23 @@ public class PlaneManager : MonoBehaviour
         // planes are not locked. Disable ARPlane Manager
         else
         {
-            planeManager.enabled = false;
             foreach (var plane in planeManager.trackables)
             {
                 plane.gameObject.SetActive(false);
             }
+        }
+    }
+
+    // reset planes from AR Session in XR Rig. (To be implemented)
+    public void ResetPlane()
+    {
+        if (windowIsOpen && !planeIsLocked)
+        {
+            arSession.Reset();
+        }
+        else
+        {
+            statusText.text += "\nPlanes not resetted. Make sure window is open and planes are not locked.";
         }
     }
 

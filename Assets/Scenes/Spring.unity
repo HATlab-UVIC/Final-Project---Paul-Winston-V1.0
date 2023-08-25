@@ -477,9 +477,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   planeSpawner: {fileID: 1253468817}
   planeMaterial: {fileID: 2100000, guid: 5d96dfe3ade22bc4dbef722c621b8916, type: 2}
-  statusText: {fileID: 0}
+  defaultPlaneMaterial: {fileID: 2100000, guid: e06cec95e0e87364ebe333926c771ab4,
+    type: 2}
+  statusText: {fileID: 2104484486}
   maxResults: 100
   minPlaneArea: 0.25
+  arSession: {fileID: 742745477}
 --- !u!4 &734411730
 Transform:
   m_ObjectHideFlags: 0
@@ -495,6 +498,18 @@ Transform:
   m_Father: {fileID: 876258685}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &742745477 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5589497133593145654, guid: fe799b2d0a84dfe43b001b56276fd2fb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1682011918}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3859a92a05d4f5d418cb6ca605290e74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0

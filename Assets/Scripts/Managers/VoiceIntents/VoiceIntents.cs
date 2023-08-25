@@ -140,13 +140,13 @@ public class VoiceIntents : Singleton<VoiceIntents>
             else if (voiceEvent.EventID == 103)
             {
                 Debug.Log("Voice Command: Open Window");
-                statusText.text = "Voice Command: Open Window (Not implemented yet)";
+                statusText.text = "Voice Command: Open Window";
                 PlaneManager.OpenWindow();
             }
             else if (voiceEvent.EventID == 104)
             {
                 Debug.Log("Voice Command: Close Windows");
-                statusText.text = "Voice Command: Close Window (Not implemented yet)";
+                statusText.text = "Voice Command: Close Window";
                 PlaneManager.CloseWindow();
             }
             else if (voiceEvent.EventID == 105)

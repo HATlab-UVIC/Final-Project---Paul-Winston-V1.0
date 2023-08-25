@@ -569,6 +569,9 @@ MonoBehaviour:
   PatientMenuUI:
   - {fileID: 1026869293}
   - {fileID: 1781309007}
+  - {fileID: 1435722267}
+  - {fileID: 1824977182}
+  - {fileID: 902821632}
 --- !u!1 &273080750
 GameObject:
   m_ObjectHideFlags: 0
