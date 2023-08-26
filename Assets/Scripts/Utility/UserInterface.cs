@@ -7,11 +7,14 @@ using UnityEngine.Experimental.XR.Interaction;
 using System.Threading;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class UserInterface : MonoBehaviour
 {
     [SerializeField, Tooltip("Amount of time (seconds) for disappearing animation to be played")]
     private float _dissapearTime = 0.5f;
+    [Tooltip("Status Text for debugging console")]
+    public Text statusText;
 
     [Tooltip("Add buttons in the Main Menu")]
     public GameObject[] MainMenuUI;
@@ -19,6 +22,9 @@ public class UserInterface : MonoBehaviour
     public GameObject[] PractionerMenuUI;
     [Tooltip("Add buttons in the Patient Menu")]
     public GameObject[] PatientMenuUI;
+    // [Tooltip("Animator of UI")]
+    // public Animator animator;
+
 
     private CurrentMenu _currentMenu = CurrentMenu.MainMenu;
 
@@ -41,6 +47,20 @@ public class UserInterface : MonoBehaviour
         PractionerMenu = 1,
         PatientMenu = 2,
         Empty = 3,
+    }
+
+    public void OnClickByEye()
+    {
+        statusText.text = "On Click By Eye triggered by Eye Controller in XR Rig";
+        XRRayInteractor xrRayInteractorEyeTracking = EyeTrackingManager.Instance.GetComponent<XRRayInteractor>();
+        
+        if (xrRayInteractorEyeTracking.interactablesSelected.Count != 0)
+        {
+            if (xrRayInteractorEyeTracking.interactablesSelected[0].transform.gameObject.GetComponent<Button>() != null)
+            {
+                xrRayInteractorEyeTracking.interactablesSelected[0].transform.gameObject.GetComponent<Button>().onClick.Invoke();
+            }
+        }
     }
 
     public void OnClick(String name)

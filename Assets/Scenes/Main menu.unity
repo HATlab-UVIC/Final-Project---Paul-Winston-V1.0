@@ -561,6 +561,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dissapearTime: 1
+  statusText: {fileID: 1318468991}
   MainMenuUI:
   - {fileID: 1836424725}
   - {fileID: 472214338}
@@ -1014,7 +1015,6 @@ GameObject:
   - component: {fileID: 472214342}
   - component: {fileID: 472214341}
   - component: {fileID: 472214340}
-  - component: {fileID: 472214344}
   m_Layer: 5
   m_Name: Button Patient
   m_TagString: Untagged
@@ -1158,107 +1158,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 472214338}
   m_CullTransparentMesh: 1
---- !u!114 &472214344
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 472214338}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a35f6cfbfba9b548aaa00d52cfe8a50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_InteractionManager: {fileID: 0}
-  m_Colliders: []
-  m_InteractionLayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_InteractionLayers:
-    m_Bits: 1
-  m_DistanceCalculationMode: 1
-  m_SelectMode: 0
-  m_CustomReticle: {fileID: 0}
-  m_AllowGazeInteraction: 0
-  m_AllowGazeSelect: 0
-  m_OverrideGazeTimeToSelect: 0
-  m_GazeTimeToSelect: 0.5
-  m_OverrideTimeToAutoDeselectGaze: 0
-  m_TimeToAutoDeselectGaze: 3
-  m_AllowGazeAssistance: 0
-  m_FirstHoverEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_LastHoverExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_HoverEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_HoverExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FirstSelectEntered:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 247193112}
-        m_TargetAssemblyTypeName: UserInterface, Assembly-CSharp
-        m_MethodName: OnClick
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Button Patient
-          m_BoolArgument: 0
-        m_CallState: 2
-  m_LastSelectExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SelectEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SelectExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Activated:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Deactivated:
-    m_PersistentCalls:
-      m_Calls: []
-  m_StartingHoverFilters: []
-  m_StartingSelectFilters: []
-  m_StartingInteractionStrengthFilters: []
-  m_OnFirstHoverEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnLastHoverExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnHoverEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnHoverExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnSelectEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnSelectExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnSelectCanceled:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnActivate:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnDeactivate:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &523165961
 GameObject:
   m_ObjectHideFlags: 0
@@ -2894,6 +2793,96 @@ PrefabInstance:
       propertyPath: m_AllowHoveredActivate
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5589497133034083128, guid: fe799b2d0a84dfe43b001b56276fd2fb,
+        type: 3}
+      propertyPath: m_AudioClipForOnHoverEntered
+      value: 
+      objectReference: {fileID: 8300000, guid: 8b799235eb88e334393bd9309f9d2b80, type: 3}
+    - target: {fileID: 5589497133034083128, guid: fe799b2d0a84dfe43b001b56276fd2fb,
+        type: 3}
+      propertyPath: m_AudioClipForOnSelectEntered
+      value: 
+      objectReference: {fileID: 8300000, guid: 463845e24ad23604887016518c19e81a, type: 3}
+    - target: {fileID: 5589497133034083128, guid: fe799b2d0a84dfe43b001b56276fd2fb,
+        type: 3}
+      propertyPath: m_PlayAudioClipOnHoverEntered
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5589497133034083128, guid: fe799b2d0a84dfe43b001b56276fd2fb,
+        type: 3}
+      propertyPath: m_PlayAudioClipOnSelectEntered
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5589497133034083128, guid: fe799b2d0a84dfe43b001b56276fd2fb,
+        type: 3}
+      propertyPath: m_HoverEntered.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5589497133034083128, guid: fe799b2d0a84dfe43b001b56276fd2fb,
+        type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5589497133034083128, guid: fe799b2d0a84dfe43b001b56276fd2fb,
+        type: 3}
+      propertyPath: m_HoverEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5589497133034083128, guid: fe799b2d0a84dfe43b001b56276fd2fb,
+        type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5589497133034083128, guid: fe799b2d0a84dfe43b001b56276fd2fb,
+        type: 3}
+      propertyPath: m_HoverEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 247193112}
+    - target: {fileID: 5589497133034083128, guid: fe799b2d0a84dfe43b001b56276fd2fb,
+        type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 247193112}
+    - target: {fileID: 5589497133034083128, guid: fe799b2d0a84dfe43b001b56276fd2fb,
+        type: 3}
+      propertyPath: m_HoverEntered.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5589497133034083128, guid: fe799b2d0a84dfe43b001b56276fd2fb,
+        type: 3}
+      propertyPath: m_HoverEntered.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickByEye
+      objectReference: {fileID: 0}
+    - target: {fileID: 5589497133034083128, guid: fe799b2d0a84dfe43b001b56276fd2fb,
+        type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5589497133034083128, guid: fe799b2d0a84dfe43b001b56276fd2fb,
+        type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickByEye
+      objectReference: {fileID: 0}
+    - target: {fileID: 5589497133034083128, guid: fe799b2d0a84dfe43b001b56276fd2fb,
+        type: 3}
+      propertyPath: m_HoverEntered.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UserInterface, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5589497133034083128, guid: fe799b2d0a84dfe43b001b56276fd2fb,
+        type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UserInterface, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5589497133034083128, guid: fe799b2d0a84dfe43b001b56276fd2fb,
+        type: 3}
+      propertyPath: m_HoverEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5589497133034083128, guid: fe799b2d0a84dfe43b001b56276fd2fb,
+        type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5589497133034083132, guid: fe799b2d0a84dfe43b001b56276fd2fb,
         type: 3}
       propertyPath: m_IsActive
@@ -2907,7 +2896,12 @@ PrefabInstance:
     - target: {fileID: 5589497133034083134, guid: fe799b2d0a84dfe43b001b56276fd2fb,
         type: 3}
       propertyPath: m_StopLineAtSelection
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5589497133034083134, guid: fe799b2d0a84dfe43b001b56276fd2fb,
+        type: 3}
+      propertyPath: m_OverrideInteractorLineLength
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5589497133593145648, guid: fe799b2d0a84dfe43b001b56276fd2fb,
         type: 3}
