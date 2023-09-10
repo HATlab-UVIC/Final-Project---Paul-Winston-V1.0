@@ -1337,6 +1337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fac925e2113473d40a037f202cd03385, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneInfo: {fileID: 11400000, guid: ce0f8942e4c0b284a9792fd413fe68f3, type: 2}
   duration: 1
   statusText: {fileID: 1318468991}
 --- !u!4 &773190230 stripped
@@ -3682,6 +3683,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Eye Tracking
       objectReference: {fileID: 0}
+    - target: {fileID: 2286250359486687164, guid: ac2c737a07a02444aa1c7495f39a374c,
+        type: 3}
+      propertyPath: sceneInfo
+      value: 
+      objectReference: {fileID: 11400000, guid: ce0f8942e4c0b284a9792fd413fe68f3,
+        type: 2}
     - target: {fileID: 2286250359486687164, guid: ac2c737a07a02444aa1c7495f39a374c,
         type: 3}
       propertyPath: statusText

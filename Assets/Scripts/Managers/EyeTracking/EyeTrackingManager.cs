@@ -28,6 +28,10 @@ public class EyeTrackingManager : Singleton<EyeTrackingManager>
 
     public Text statusText;
 
+    public SceneInfo sceneInfo;
+
+    private bool GlobalEyeTrackingIsOn;
+
     // Used to get other eye data
     private InputDevice eyesDevice;
 
@@ -52,23 +56,29 @@ public class EyeTrackingManager : Singleton<EyeTrackingManager>
         permissionCallbacks.OnPermissionDeniedAndDontAskAgain += OnPermissionDenied;
     }
 
+
     private void Start()
     {
+        this.GlobalEyeTrackingIsOn = sceneInfo.GlobalEyeTrackingIsOn;
         mlInputs = new MagicLeapInputs();
         mlInputs.Enable();
         MLPermissions.RequestPermission(MLPermission.EyeTracking, permissionCallbacks);
         rayOriginTransform = mainCameraTransform;
         leftEyeTranformTrackedPoseDriver = this.transform.GetChild(0).transform;
         rightEyeTranformTrackedPoseDriver = this.transform.GetChild(1).transform;
-        if (permissionGranted)
+        if (permissionGranted && this.GlobalEyeTrackingIsOn)
         {
             OnStartEyeTrackingByVoiceIntent();
-            statusText.text += "Eye Tracking is active";
+            // statusText.text += "Eye Tracking is active";
+            statusText.text += $"Eye Tracking permission: {permissionGranted}";
+            this.GlobalEyeTrackingIsOn = true;
         }
         else
         {
             OnStopEyeTrackingByVoiceIntent();
-            statusText.text += "Eye Tracking is not active";
+            // statusText.text += "Eye Tracking is not active";
+            statusText.text += $"Eye Tracking permission: {permissionGranted}";
+            this.GlobalEyeTrackingIsOn = false;
         }
     }
 
@@ -123,6 +133,8 @@ public class EyeTrackingManager : Singleton<EyeTrackingManager>
             }
             EyesController.SetActive(false);
             InputSubsystem.Extensions.MLEyes.StopTracking();
+            this.GlobalEyeTrackingIsOn = true;
+            sceneInfo.GlobalEyeTrackingIsOn = true;
         }
         catch (Exception e)
         {
@@ -142,6 +154,8 @@ public class EyeTrackingManager : Singleton<EyeTrackingManager>
             }
             EyesController.SetActive(true);
             InputSubsystem.Extensions.MLEyes.StartTracking();
+            this.GlobalEyeTrackingIsOn = false;
+            sceneInfo.GlobalEyeTrackingIsOn = false;
         }
         catch (Exception e)
         {

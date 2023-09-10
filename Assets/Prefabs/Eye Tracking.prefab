@@ -171,6 +171,7 @@ MonoBehaviour:
   EyesController: {fileID: 0}
   mainCameraTransform: {fileID: 0}
   statusText: {fileID: 0}
+  sceneInfo: {fileID: 11400000, guid: ce0f8942e4c0b284a9792fd413fe68f3, type: 2}
   permissionGranted: 0
 --- !u!114 &3891392706969878395
 MonoBehaviour:

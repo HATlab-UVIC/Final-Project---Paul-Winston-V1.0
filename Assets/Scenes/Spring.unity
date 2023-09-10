@@ -288,6 +288,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dissapearTime: 1
+  statusText: {fileID: 0}
   MainMenuUI:
   - {fileID: 0}
   - {fileID: 0}
@@ -813,7 +814,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1240425596
 Transform:
   m_ObjectHideFlags: 0
@@ -1460,6 +1461,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2286250359486687164, guid: ac2c737a07a02444aa1c7495f39a374c,
         type: 3}
+      propertyPath: sceneInfo
+      value: 
+      objectReference: {fileID: 11400000, guid: ce0f8942e4c0b284a9792fd413fe68f3,
+        type: 2}
+    - target: {fileID: 2286250359486687164, guid: ac2c737a07a02444aa1c7495f39a374c,
+        type: 3}
       propertyPath: statusText
       value: 
       objectReference: {fileID: 2104484486}
@@ -1642,6 +1649,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fac925e2113473d40a037f202cd03385, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneInfo: {fileID: 11400000, guid: ce0f8942e4c0b284a9792fd413fe68f3, type: 2}
   duration: 1
   statusText: {fileID: 2104484486}
 --- !u!1 &1931053482

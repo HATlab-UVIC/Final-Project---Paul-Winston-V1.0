@@ -9,6 +9,8 @@ using UnityEngine.XR.MagicLeap;
 
 public class GlobalDimManager : MonoBehaviour
 {
+    public SceneInfo sceneInfo;
+
     private float GlobalDimmingValue = 0f;
     private bool GlobalDimmingIsOn = false;
     private float dimmerDelta;
@@ -26,6 +28,11 @@ public class GlobalDimManager : MonoBehaviour
         dimVoiceCommand = new UnityEvent<bool>();
         dimVoiceCommand.AddListener(_OnGlobalDimVoiceCommand);
         dimmerDelta = duration * Time.fixedDeltaTime;
+    }
+
+    private void OnEnable()
+    {
+        this.GlobalDimmingIsOn = sceneInfo.GlobalDimmingIsOn;
     }
 
     private void _OnGlobalDimVoiceCommand(bool globalDimIsON)
@@ -50,6 +57,7 @@ public class GlobalDimManager : MonoBehaviour
                 yield return new WaitForFixedUpdate();
             }
             GlobalDimmingIsOn = true;
+            sceneInfo.GlobalDimmingIsOn = true;
             statusText.text += "\nGlobal Dimming is ON";
         }
         else
@@ -69,6 +77,7 @@ public class GlobalDimManager : MonoBehaviour
                 yield return new WaitForFixedUpdate();
             }
             GlobalDimmingIsOn = false;
+            sceneInfo.GlobalDimmingIsOn = false;
             statusText.text += "\nGlobal Dimming is OFF";
         }
         else
