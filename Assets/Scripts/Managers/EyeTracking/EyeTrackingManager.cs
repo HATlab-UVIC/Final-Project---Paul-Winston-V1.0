@@ -30,7 +30,7 @@ public class EyeTrackingManager : Singleton<EyeTrackingManager>
 
     public SceneInfo sceneInfo;
 
-    private bool GlobalEyeTrackingIsOn;
+    private bool LocalEyeTrackingIsOn;
 
     // Used to get other eye data
     private InputDevice eyesDevice;
@@ -59,26 +59,27 @@ public class EyeTrackingManager : Singleton<EyeTrackingManager>
 
     private void Start()
     {
-        this.GlobalEyeTrackingIsOn = sceneInfo.GlobalEyeTrackingIsOn;
+        this.LocalEyeTrackingIsOn = sceneInfo.GlobalEyeTrackingIsOn;
+        statusText.text += $"ET permission read from Scriptable Object: {sceneInfo.GlobalEyeTrackingIsOn}\n";
         mlInputs = new MagicLeapInputs();
         mlInputs.Enable();
         MLPermissions.RequestPermission(MLPermission.EyeTracking, permissionCallbacks);
         rayOriginTransform = mainCameraTransform;
         leftEyeTranformTrackedPoseDriver = this.transform.GetChild(0).transform;
         rightEyeTranformTrackedPoseDriver = this.transform.GetChild(1).transform;
-        if (permissionGranted && this.GlobalEyeTrackingIsOn)
+        if (permissionGranted && LocalEyeTrackingIsOn)
         {
             OnStartEyeTrackingByVoiceIntent();
             // statusText.text += "Eye Tracking is active";
-            statusText.text += $"Eye Tracking permission: {permissionGranted}";
-            this.GlobalEyeTrackingIsOn = true;
+            statusText.text += $"Eye Tracking permission: {permissionGranted}\n";
+            LocalEyeTrackingIsOn = true;
         }
         else
         {
             OnStopEyeTrackingByVoiceIntent();
             // statusText.text += "Eye Tracking is not active";
-            statusText.text += $"Eye Tracking permission: {permissionGranted}";
-            this.GlobalEyeTrackingIsOn = false;
+            statusText.text += $"Eye Tracking permission: {permissionGranted}\n";
+            LocalEyeTrackingIsOn = false;
         }
     }
 
@@ -123,25 +124,6 @@ public class EyeTrackingManager : Singleton<EyeTrackingManager>
         }
     }
 
-    [ContextMenu("OnStopEyeTrackingByVoiceIntent")]
-    public void OnStopEyeTrackingByVoiceIntent()
-    {
-        try
-        {
-            foreach (Transform child in this.transform) {
-                child.gameObject.SetActive(false);
-            }
-            EyesController.SetActive(false);
-            InputSubsystem.Extensions.MLEyes.StopTracking();
-            this.GlobalEyeTrackingIsOn = true;
-            sceneInfo.GlobalEyeTrackingIsOn = true;
-        }
-        catch (Exception e)
-        {
-            statusText.text += e.ToString();
-        }
-        statusText.text += "Eye tracking disabled by voice intent";
-    }
 
     [ContextMenu("OnStartEyeTrackingByVoiceIntent")]
     public void OnStartEyeTrackingByVoiceIntent()
@@ -154,13 +136,34 @@ public class EyeTrackingManager : Singleton<EyeTrackingManager>
             }
             EyesController.SetActive(true);
             InputSubsystem.Extensions.MLEyes.StartTracking();
-            this.GlobalEyeTrackingIsOn = false;
-            sceneInfo.GlobalEyeTrackingIsOn = false;
+            LocalEyeTrackingIsOn = true;
+            sceneInfo.GlobalEyeTrackingIsOn = true;
         }
         catch (Exception e)
         {
             statusText.text += e.ToString();
         }
         statusText.text += "Eye tracking enabled by voice intent";
+    }
+
+
+    [ContextMenu("OnStopEyeTrackingByVoiceIntent")]
+    public void OnStopEyeTrackingByVoiceIntent()
+    {
+        try
+        {
+            foreach (Transform child in this.transform) {
+                child.gameObject.SetActive(false);
+            }
+            EyesController.SetActive(false);
+            InputSubsystem.Extensions.MLEyes.StopTracking();
+            LocalEyeTrackingIsOn = false;
+            sceneInfo.GlobalEyeTrackingIsOn = false;
+        }
+        catch (Exception e)
+        {
+            statusText.text += e.ToString();
+        }
+        statusText.text += "Eye tracking disabled by voice intent";
     }
 }
