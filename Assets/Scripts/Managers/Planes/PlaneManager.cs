@@ -126,6 +126,7 @@ public class PlaneManager : MonoBehaviour
                 temp.GetComponent<ARPlaneMeshVisualizer>().enabled = false;
                 temp.GetComponent<MeshRenderer>().enabled = true;
                 temp.GetComponent<PlanePrefab>().enabled = false;
+                temp.tag = "LockedPlane";
                 // temp.GetComponent<ARPlane>().enabled = false;
                 if (isFloor)
                 {
@@ -138,6 +139,7 @@ public class PlaneManager : MonoBehaviour
                 temp.transform.parent = planeSpawner.transform;
                 plane.gameObject.SetActive(false);
             }
+            HotBalloonBehavior.lockedPlanesGenerated.Invoke(GameObject.FindGameObjectsWithTag("LockedPlane"));
             planeIsLocked = true;
             planeManager.enabled = false;
         }

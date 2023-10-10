@@ -7,6 +7,8 @@ using UnityEngine.XR;
 using UnityEngine.UI;
 using static MagicLeapInputs;
 using InputDevice = UnityEngine.XR.InputDevice;
+using UnityEngine.XR.Interaction.Toolkit;
+using Unity.VisualScripting;
 
 public class EyeRayInteractor : MonoBehaviour
 {
@@ -35,6 +37,8 @@ public class EyeRayInteractor : MonoBehaviour
 
     public GameObject fixationPoint;
     private Vector3 rayRotationFocusPointPosition;
+
+    public XRRayInteractor XRRayInteractor;
 
     void Update()
     {
@@ -67,5 +71,19 @@ public class EyeRayInteractor : MonoBehaviour
     private void OnPermissionGranted()
     {
         eyesActions = new MagicLeapInputs.EyesActions(mlInputs);
+    }
+
+    public void OnClickByEye()
+    {
+        statusText.text = "On Click By Eye triggered by Eye Controller in XR Rig";
+        XRRayInteractor xrRayInteractorEyeTracking = XRRayInteractor.GetComponent<XRRayInteractor>();
+
+        if (xrRayInteractorEyeTracking.interactablesSelected.Count != 0)
+        {
+            if (xrRayInteractorEyeTracking.interactablesSelected[0].transform.gameObject.GetComponent<Button>() != null)
+            {
+                xrRayInteractorEyeTracking.interactablesSelected[0].transform.gameObject.GetComponent<Button>().onClick.Invoke();
+            }
+        }
     }
 }

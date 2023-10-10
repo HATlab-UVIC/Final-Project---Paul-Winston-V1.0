@@ -49,19 +49,7 @@ public class UserInterface : MonoBehaviour
         Empty = 3,
     }
 
-    public void OnClickByEye()
-    {
-        statusText.text = "On Click By Eye triggered by Eye Controller in XR Rig";
-        XRRayInteractor xrRayInteractorEyeTracking = EyeTrackingManager.Instance.GetComponent<XRRayInteractor>();
-        
-        if (xrRayInteractorEyeTracking.interactablesSelected.Count != 0)
-        {
-            if (xrRayInteractorEyeTracking.interactablesSelected[0].transform.gameObject.GetComponent<Button>() != null)
-            {
-                xrRayInteractorEyeTracking.interactablesSelected[0].transform.gameObject.GetComponent<Button>().onClick.Invoke();
-            }
-        }
-    }
+    
 
     public void OnClick(String name)
     {
