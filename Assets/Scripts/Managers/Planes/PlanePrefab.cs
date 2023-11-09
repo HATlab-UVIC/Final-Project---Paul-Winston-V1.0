@@ -21,10 +21,10 @@ public class PlanePrefab : MonoBehaviour
         switch (plane.classification)
         {
             case PlaneClassification.Floor:
-                color = Color.green;
+                color = new Color(0, 0.5f, 0, 1);
                 break;
             case PlaneClassification.Ceiling:
-                color = Color.blue;
+                color = new Color(0, 0, 0.7f, 1);
                 break;
             case PlaneClassification.Wall:
                 color = Color.red;

@@ -123,21 +123,24 @@ public class UserInterface : MonoBehaviour
             }
             else if (name == PatientMenuUI[2].name)
             {
+                SceneManager.LoadScene("Spring");
                 // SceneManager.LoadScene("Summer");
-                _currentMenu = CurrentMenu.MainMenu;
-                UIUpdated.Invoke();
+                /*_currentMenu = CurrentMenu.MainMenu;
+                UIUpdated.Invoke();*/
             }
             else if (name == PatientMenuUI[3].name)
             {
+                SceneManager.LoadScene("Spring");
                 // SceneManager.LoadScene("Fall");
-                _currentMenu = CurrentMenu.MainMenu;
-                UIUpdated.Invoke();
+               /* _currentMenu = CurrentMenu.MainMenu;
+                UIUpdated.Invoke();*/
             }
             else if (name == PatientMenuUI[4].name)
             {
+                SceneManager.LoadScene("Spring");
                 // SceneManager.LoadScene("Winter");
-                _currentMenu = CurrentMenu.MainMenu;
-                UIUpdated.Invoke();
+                /*_currentMenu = CurrentMenu.MainMenu;
+                UIUpdated.Invoke();*/
             }
         }
     }

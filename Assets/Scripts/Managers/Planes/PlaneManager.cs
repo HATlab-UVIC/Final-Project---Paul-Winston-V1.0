@@ -137,9 +137,10 @@ public class PlaneManager : MonoBehaviour
                     temp.GetComponent<MeshRenderer>().material = planeMaterial;
                 }
                 temp.transform.parent = planeSpawner.transform;
+                // statusText.text += "\ntemp.transform.parent: " + temp.transform.parent.name;
                 plane.gameObject.SetActive(false);
             }
-            HotBalloonBehavior.lockedPlanesGenerated.Invoke(GameObject.FindGameObjectsWithTag("LockedPlane"));
+            // HotBalloonBehavior.lockedPlanesGenerated.Invoke(GameObject.FindGameObjectsWithTag("LockedPlane"));
             planeIsLocked = true;
             planeManager.enabled = false;
         }
@@ -193,6 +194,7 @@ public class PlaneManager : MonoBehaviour
     {
         windowIsOpen = false;
         // planes are locked. Disable locked planes
+        statusText.text += "\nplaneIsLocked: " + planeIsLocked;
         if (planeIsLocked)
         {
             planeSpawner.SetActive(false);
